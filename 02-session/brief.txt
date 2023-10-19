@@ -1,0 +1,37 @@
+- in the beggining of bash files, there is start line called binBash (#!bin/bash)
+
+- to give the permission to our file, to be run like a bash, use "chmod +x"
+
+- how to figure out where is my bin file location? we can use "which [whatwewant]"
+
+- base64: (64= 2^6)
+. ASCII:
+. decimal:
+. binary:
+
+- incremental ID:
+. advantages: fast
+. disadvantages: predictable, limited
+
+- Buffer: 
+. allocUnsafe doesn't reset the allocated buffer. allocUnsafe speed is > alloc speed
+. in Buffer.from() we don't specify the amount of allocated bits. it's allcoated base on what we make Buffer.from()
+. in JS string is immutable but we can immutate it by reassigning buffer 
+. Buffer.set()
+* if Buffer is 100% in use, what would happen in we want to allocate?
+
+- Stream:
+
+
+- web server: is an application that listens on specific ports and domains, and can respond to requests.    
+. different webservers: nginx, appachi,...
+
+- http.createServer((req,res){} returns 2 params: request and respnse
+.res: res.write() accepts strings, number, buffer, base64...
+. we can add other methods to the req  and res
+
+- unlike othe programing languages (php,..) that cannot return when the respond is done, JS can do that
+
+- GET vs POST request:
+. GET: 1.faster 2.sends the query in the URL
+. POST: 1. send data in the body. more secure. body is sent to the network as chunks. 

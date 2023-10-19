@@ -1,0 +1,38 @@
+
+
+- response object (from http server ) is a streamable func
+
+- Cookie:
+. Sameite: can be set  to 3 different
+    . none: can get cookies 
+    . lax: only gets the cookie on GET not in POST
+    . strict: restrict on both GET and POST
+
+. CSRF token:  
+
+
+
+- In Node.js, fs.existsSync() is a method provided by the built-in fs (File System) module. It is used to check if a file or directory exists at a specified path on the file system. 
+ 
+- node-static: for static directory
+  
+- package to record, convert and stream sound and video files: ffmpeg
+
+- cookie: accesable from backend - just to the origin cookie
+. origin: (protocol, domain name, port)
+
+- child-proccess (4 types):
+. execFile: execute file 
+. exec: execute bash
+. spwan: child can be any languaage file(python, c++,...)
+. fork: should be JS. parent and child can communicate with each other like event listener
+
+- Cluster:
+. cluster vs child-process: cluster we can sharer TCP connection port.
+
+to study: 
+. proccess vs thread
+. eventloop and eventqeue 
+
+for each process or thread, we have a seprate event queue and event loop
+

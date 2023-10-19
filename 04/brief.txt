@@ -1,0 +1,10 @@
+process vs threads 
+- process are isolated from each other. but in threads data can be shared.
+- bootup and hibernate are expensive in process, cheap on threads
+
+- we cannot termiante worker from it's own code. it should be terminated from the master
+
+- depends on where JS is running, can be considered as single thread ot multi threads.    
+. the only thing we can only say about JS multi threads are: 
+    . we don't have shared variables
+    . as threre is event qeue, if two response comes at the exact time, then master can't send both of them to the workers 
