@@ -1,20 +1,22 @@
-import { DataTypes } from 'sequelize'
-import { BaseModel, sequelize } from '../config/databse';
+import { BaseModel, sequelize, DataTypes } from "../config/databse";
 
 class Article extends BaseModel {}
 
-Article.init({
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false
+Article.init(
+  {
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    text: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
   },
-  text: {
-    type: DataTypes.TEXT,
-    allowNull: false
+  {
+    sequelize,
+    modelName: "articles",
   }
-}, {
-  sequelize,
-  modelName: 'articles' 
-});
+);
 
-export default Article
+export default Article;
