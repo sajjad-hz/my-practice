@@ -1,30 +1,32 @@
-import Article from '../models/article'
-import { NotFoundError } from '../utils/errors'
+import Article from "../models/article";
+import { NotFoundError } from "../utils/errors";
 
 class ArticleController {
-  async list (req, res) {
-    const articles = await Article.findAll()
+  async list(req, res) {
+    const articles = await Article.findAll();
 
-    res.render('article/list', {
-      title: 'Articles',
-      articles
-    })
+    res.render("article/list", {
+      title: "Articles",
+      articles,
+      user: req.user,
+    });
   }
 
-  async get (req, res) {
-    const { id } = req.params
+  async get(req, res) {
+    const { id } = req.params;
 
-    const article = await Article.find(+id)
+    const article = await Article.find(+id);
 
     if (!article) {
-      throw new NotFoundError('Article not found')
+      throw new NotFoundError("Article not found");
     }
 
-    res.render('article/show', {
+    res.render("article/show", {
       title: article.title,
-      article
-    })
+      article,
+      user: req.user,
+    });
   }
 }
 
-export default new ArticleController()
+export default new ArticleController();

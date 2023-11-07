@@ -1,104 +1,108 @@
-import Article from '../../models/article'
-import { BadRequestError, NotFoundError } from '../../utils/errors'
+import Article from "../../models/article";
+import { BadRequestError, NotFoundError } from "../../utils/errors";
 
 class ArticleController {
-  async list (req, res) {
-    const articles = await Article.findAll()
+  async list(req, res) {
+    const articles = await Article.findAll({include: ['user']});
 
-    res.render('admin/article/list', {
-      title: 'Article list',
-      articles
-    })
+    res.render("admin/article/list", {
+      title: "Article list",
+      articles,
+      user: req.user,
+    });
   }
 
-  async get (req, res) {
-    const { id } = req.params
+  async get(req, res) {
+    const { id } = req.params;
 
-    const article = await Article.find(+id)
+    const article = await Article.find(+id, {include: ['user']});
 
-    console.log(article)
+    console.log(article);
 
     if (!article) {
-      throw new NotFoundError('Article not found')
+      throw new NotFoundError("Article not found");
     }
 
-    res.render('admin/article/show', {
+    res.render("admin/article/show", {
       title: article.title,
-      article
-    })
+      article,
+      user: req.user,
+    });
   }
 
-  create (req, res) {
-    res.render('admin/article/create', {
-      title: 'Create Article'
-    })
+  create(req, res) {
+    res.render("admin/article/create", {
+      title: "Create Article",
+      user: req.user,
+    });
   }
 
-  async add (req, res) {
-    const { title, text } = req.body
+  async add(req, res) {
+    const { title, text } = req.body;
 
     if (!title || !text) {
-      throw new BadRequestError('Title and Text are required')
+      throw new BadRequestError("Title and Text are required");
     }
 
-    const article = new Article({ title, text })
+    const article = new Article({ title, text, userId: req.user.id });
 
-    await article.save()
+    await article.save();
 
-    res.status(201).redirect('/admin/article')
+    res.status(201).redirect("/admin/article");
   }
 
-  async edit (req, res) {
-    const { id } = req.params
+  async edit(req, res) {
+    const { id } = req.params;
 
-    const article = await Article.find(+id)
+    const article = await Article.find(+id);
 
     if (!article) {
-      throw new NotFoundError('Article not found')
+      throw new NotFoundError("Article not found");
     }
 
-    res.render('admin/article/edit', {
+    res.render("admin/article/edit", {
       title: `Edit article: ${article.title}`,
-      article
-    })
+      article,
+      user: req.user,
+    });
   }
 
-  async update (req, res) {
-    const { id } = req.params
+  async update(req, res) {
+    const { id } = req.params;
 
-    const { title, text } = req.body
+    const { title, text } = req.body;
 
     if (!title || !text) {
-      throw new BadRequestError('Title and Text are required')
+      throw new BadRequestError("Title and Text are required");
     }
 
-    const article = await Article.find(+id)
+    const article = await Article.find(+id);
 
     if (!article) {
-      throw new NotFoundError('Article not found')
+      throw new NotFoundError("Article not found");
     }
 
-    article.title = title
-    article.text = text
+    article.title = title;
+    article.text = text;
 
-    await article.save()
+    await article.save();
 
-    res.redirect(`/admin/article/${id}`)
+    res.redirect(`/admin/article/${id}`);
   }
 
-  async remove (req, res) {
-    const { id } = req.params
+  async remove(req, res) {
+    const { id } = req.params;
 
-    const article = await Article.find(+id)
+    const article = await Article.find(+id);
 
     if (!article) {
-      throw new NotFoundError('Article not found')
+      throw new NotFoundError("Article not found");
     }
 
-    await article.remove()
+    await article.remove();
 
-    res.redirect('/admin/article')
+    res.redirect("/admin/article");
   }
 }
 
-export default new ArticleController()
+export default new ArticleController();

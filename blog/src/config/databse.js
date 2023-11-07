@@ -19,6 +19,6 @@ export class BaseModel extends Model {
     }
 
     remove(id) {
-        this.destroy(id)
+       return this.destroy(id)
     }
 }

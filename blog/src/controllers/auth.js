@@ -1,13 +1,15 @@
 import User from "../models/user";
 import { BadRequestError } from "../utils/errors";
 import bcrypt from "bcrypt";
-
 class AuthController {
   transformUser(user) {
     user.set("password", undefined);
   }
 
   loginPage(req, res) {
+    if (req.user) {
+      return res.redirect("/");
+    }
     res.render("auth/login", {
       title: "Login",
     });
@@ -16,15 +18,21 @@ class AuthController {
   async login(req, res) {
     const { username, password } = req.body;
 
-    const user = await User.findOne({ where: { username } });
-    const comparePass = await bcrypt.compare(password, user.password)
-    
-    if (!user || !comparePass) {
-      throw new BadRequestError("Credential Error");
+    if (!username || !password) {
+      throw new BadRequestError("username and password is required!");
     }
 
-    this.transformUser(user)
-    res.json(user);
+    const user = await User.findOne({ where: { username } });
+
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      throw new BadRequestError("Credential error");
+    }
+
+    this.transformUser(user);
+
+    req.session.user = user;
+
+    res.redirect("/");
   }
 
   registerPage(req, res) {
@@ -51,7 +59,17 @@ class AuthController {
     }
 
     this.transformUser(user);
-    res.json(user);
+    res.redirect("/login");
+  }
+
+  logout(req, res) {
+    req.session.destroy((error) => {
+      if (!error) {
+        res.redirect("/");
+      } else {
+        throw new BadRequestError("logout error");
+      }
+    });
   }
 }
 
