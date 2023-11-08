@@ -15,7 +15,7 @@ Article.init(
   },
   {
     sequelize,
-    modelName: "articles",
+    modelName: "article",
   }
 );
 

@@ -1,14 +1,15 @@
 import Article from "../models/article";
 import { NotFoundError } from "../utils/errors";
-
 class ArticleController {
   async list(req, res) {
-    const articles = await Article.findAll();
+    const { page = 1 } = req.query;
+
+    const data = await Article.findPaginate(page);
 
     res.render("article/list", {
       title: "Articles",
-      articles,
       user: req.user,
+      ...data,
     });
   }
 

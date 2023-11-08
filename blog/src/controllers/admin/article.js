@@ -3,21 +3,23 @@ import { BadRequestError, NotFoundError } from "../../utils/errors";
 
 class ArticleController {
   async list(req, res) {
-    const articles = await Article.findAll({include: ['user']});
+    const { page = 1 } = req.query;
+
+    const data = await Article.findPaginate(page, {
+      include: ['user'],
+    });
 
     res.render("admin/article/list", {
       title: "Article list",
-      articles,
       user: req.user,
+      ...data,
     });
   }
 
   async get(req, res) {
     const { id } = req.params;
 
-    const article = await Article.find(+id, {include: ['user']});
-
-    console.log(article);
+    const article = await Article.find(+id, { include: ["user"] });
 
     if (!article) {
       throw new NotFoundError("Article not found");

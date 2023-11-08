@@ -1,0 +1,17 @@
+<div class="pagination">
+  <ul>
+    <% if (hasPervPage ) { %>
+    <li>
+      <a href="?page=<%= pervPage %>"> Perv </a>
+    </li>
+    <% } %> <% for(let i = 1; i <= pages; i++) { %>
+    <li>
+      <a href="?page=<%= i %>"> <%= i %> </a>
+    </li>
+    <% } %> <% if ( hasNextPage ) { %>
+    <li>
+      <a href="?page=<%= nextPage %>"> Next </a>
+    </li>
+    <% } %>
+  </ul>
+</div>
