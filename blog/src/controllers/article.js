@@ -4,7 +4,7 @@ class ArticleController {
   async list(req, res) {
     const { page = 1 } = req.query;
 
-    const data = await Article.findPaginate(page);
+    const data = await Article.findPaginate(page, {limit: 5});
 
     res.render("article/list", {
       title: "Articles",
