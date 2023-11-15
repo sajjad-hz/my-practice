@@ -1,16 +1,17 @@
 import express from 'express'
 import ArticleController from '../../../controllers/api/admin/article'
+import acl from '../../../middlewares/acl'
 
 const router = express.Router()
 
-router.get('', ArticleController.list)
+router.get('',acl('WRITER'), ArticleController.list)
 // router.get('/:id([0-9]+)', ArticleController.get)
-router.get('/:id(\\d+)', ArticleController.get)
+router.get('/:id(\\d+)',acl('WRITER'), ArticleController.get)
 // router.get('/create', ArticleController.create)
-router.post('', ArticleController.add)
+router.post('',acl('WRITER'), ArticleController.add)
 // router.get('/:id(\\d+)/edit', ArticleController.edit)
-router.put('/:id(\\d+)', ArticleController.update)
-router.delete('/:id(\\d+)', ArticleController.remove)
+router.put('/:id(\\d+)',acl('MODERATOR'), ArticleController.update)
+router.delete('/:id(\\d+)',acl('ADMIN'), ArticleController.remove)
 
 export default router
 
