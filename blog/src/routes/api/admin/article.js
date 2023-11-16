@@ -1,19 +1,23 @@
-import express from 'express'
-import ArticleController from '../../../controllers/api/admin/article'
-import acl from '../../../middlewares/acl'
+import express from "express";
+import ArticleController from "../../../controllers/api/admin/article";
+import acl from "../../../middlewares/acl";
+import { validate } from "express-jsonschema";
+import { articleSchema as schema } from "../../../validators/article";
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('',acl('WRITER'), ArticleController.list)
-// router.get('/:id([0-9]+)', ArticleController.get)
-router.get('/:id(\\d+)',acl('WRITER'), ArticleController.get)
-// router.get('/create', ArticleController.create)
-router.post('',acl('WRITER'), ArticleController.add)
-// router.get('/:id(\\d+)/edit', ArticleController.edit)
-router.put('/:id(\\d+)',acl('MODERATOR'), ArticleController.update)
-router.delete('/:id(\\d+)',acl('ADMIN'), ArticleController.remove)
+router.get("", acl("WRITER"), ArticleController.list);
+router.get("/:id(\\d+)", acl("WRITER"), ArticleController.get);
+router.post("", acl("WRITER"), validate(schema), ArticleController.add);
+router.put(
+  "/:id(\\d+)",
+  acl("MODERATOR"),
+  validate(schema),
+  ArticleController.update
+);
+router.delete("/:id(\\d+)", acl("ADMIN"), ArticleController.remove);
 
-export default router
+export default router;
 
 // RESTFUL API
 

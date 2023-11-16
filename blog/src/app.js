@@ -23,7 +23,7 @@ export async function bootstrap() {
   app.use(methodOverride);
 
   await sequelize.authenticate();
-  await sequelize.sync({force:true});
+  await sequelize.sync();
 
   // const redisClient = new Redis(6383);
   // const store = new RedisStore({ client: redisClient});

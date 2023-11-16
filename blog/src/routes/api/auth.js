@@ -1,9 +1,10 @@
 import { Router } from "express";
 import AuthController from "../../controllers/api/auth";
+import { validate } from "express-jsonschema";
+import { loginSchema } from "../../validators/auth";
 
-const router = Router()
+const router = Router();
 
-router.post('/login', AuthController.login)
+router.post("/login", validate(loginSchema), AuthController.login);
 
-
-export default router
+export default router;

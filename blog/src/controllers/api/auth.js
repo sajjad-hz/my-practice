@@ -22,7 +22,7 @@ class AuthController {
     const token = jwt.sign(
       { id: user.id, username: username },
       process.env.SECRET,
-      { expiresIn: "2m" }
+      { expiresIn: Math.floor(Date.now() / 1000) + (60 * 60) } // one hour
     );
 
     res.json({token, ...user.toJSON(),password : undefined});
