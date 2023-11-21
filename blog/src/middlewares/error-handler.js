@@ -1,8 +1,18 @@
+import {JsonSchemaValidation} from 'express-jsonschema'
+
 export default (err, req, res, next) => {
-  console.log(err.message);
+  console.log("%o",err);
   // console.log(err.status)
 
   const status = err.status ?? 500;
+
+  if (err instanceof JsonSchemaValidation) {
+    res.status(400).json({
+      code: 400,
+      message: 'Validaion Error',
+      fields: err.validations
+    })
+  }
 
   const message =
     err.status < 500 || process.env.NODE_ENV === "development"
